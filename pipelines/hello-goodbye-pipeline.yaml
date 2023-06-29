@@ -9,12 +9,14 @@ spec:
   tasks:
     - name: hello
       taskRef:
+        kind: Task
         name: hello
     - name: goodbye
       timeout: 2h30m
       runAfter:
         - hello
       taskRef:
+        kind: Task
         name: goodbye
       params:
       - name: username
