@@ -3,7 +3,7 @@ kind: Pipeline
 metadata:
   name: hello-goodbye
 spec:
-  param:
+  params:
   - name: username
     type: string
   tasks:
@@ -11,6 +11,7 @@ spec:
       taskRef:
         name: hello
     - name: goodbye
+      timeout: 2h30m
       runAfter:
         - hello
       taskRef:
