@@ -1,0 +1,8 @@
+.git
+*.md
+!README.md
+
+# Native cmake build
+build/
+build*/
+CMakeFiles/
