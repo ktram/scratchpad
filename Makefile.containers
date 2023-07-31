@@ -1,0 +1,42 @@
+PROJECT := demo-boost-app
+MOUNT_DIRECTORY := /src
+
+VERSION := $(shell git describe --long --dirty 2>/dev/null || true)
+# Inspired by https://dev.to/eugenebabichenko/generating-pretty-version-strings-including-nightly-with-git-and-makefiles-48p3
+ifeq ($(VERSION),)
+	COMMIT_SHA := $(shell git rev-parse --short HEAD)
+	DATE := $(shell git log -1 --format=%cd --date=format:"%Y%m%d")
+	VERSION := $(DATE)-$(COMMIT_SHA)
+endif
+
+REGISTRY := $(CONTAINER_REGISTRY)
+IMAGE_NAME := $(PROJECT)
+IMAGE_TAG := $(VERSION)
+IMAGE := $(IMAGE_NAME):$(IMAGE_TAG)
+BUILDER_IMAGE := cpp-boost:1.80.0
+
+# HELP
+# This will output the help for each task
+# thanks to https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
+.PHONY: help
+
+help: ## This help
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+
+.DEFAULT_GOAL := help
+
+image: ## Build container image
+	docker build -f Dockerfile -t ${IMAGE} .
+	docker tag ${IMAGE} ${IMAGE_NAME}:local
+
+push-image: image ## Push image to registry
+	docker tag ${IMAGE} ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
+	docker push ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
+
+run: image ## Run the container image
+	docker run --rm $(IMAGE)
+
+shell: ## Run builder image with directory mounted
+	docker run --rm -it -v $(PWD):$(MOUNT_DIRECTORY) \
+		-w $(MOUNT_DIRECTORY) \
+		$(BUILDER_IMAGE) bash

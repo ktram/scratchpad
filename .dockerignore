@@ -1,6 +1,9 @@
-.git
+.git/
+.gitignore
 *.md
 !README.md
+.devcontainer/
+.vscode/
 
 # Native cmake build
 build/

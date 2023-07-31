@@ -1,6 +1,3 @@
-build/
-tmp/
-
 # Created by https://www.toptal.com/developers/gitignore/api/cmake,c++
 # Edit at https://www.toptal.com/developers/gitignore?templates=cmake,c++
 
@@ -56,3 +53,7 @@ _deps
 *-prefix/
 
 # End of https://www.toptal.com/developers/gitignore/api/cmake,c++
+
+build/
+tmp/
+!builder-image/Makefile

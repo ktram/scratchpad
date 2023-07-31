@@ -1,8 +1,8 @@
-FROM cpp-boost:1.80.0-mcr AS builder
+FROM cpp-boost:1.80.0 AS builder
 
 WORKDIR /src
 
-COPY CMakeLists.txt simple_ls.cpp ./
+COPY . ./
 
 RUN cmake -B build -S . && cmake --build build/
 
