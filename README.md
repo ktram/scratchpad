@@ -27,3 +27,9 @@ For a richer development experience, this is configured for a [Development
 Container](https://containers.dev/).  For example, with Visual Studio Code, open
 the directory in a dev container.  The debugger can be used with the `CMake:
 Debug` option.
+
+## Resources
+
+- <https://medium.com/codex/a-practical-guide-to-containerize-your-c-application-with-docker-50abb197f6d4>
+- <https://medium.com/@aharon.amir/develop-c-with-vscode-remote-containers-fa60eb9ffcb2>
+- <https://devblogs.microsoft.com/cppblog/dev-containers-for-c-in-visual-studio/>
